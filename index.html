@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advent Calendar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        h1 {
+            color: #c94c4c; /* Christmas red */
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .door {
+            position: relative;
+            width: 100px; /* Adjusted width */
+            height: 100px; /* Adjusted height */
+            cursor: pointer;
+            perspective: 1000px;
+            transition: transform 0.5s;
+            pointer-events: none; /* Initially disable click events */
+        }
+        .door:hover {
+            transform: scale(1.1);
+        }
+        .hatch {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            background-color: #e24d4d; /* Slightly lighter red */
+            border: 2px solid #a92a2a; /* Darker red border */
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            color: #fff; /* White text */
+            font-weight: bold;
+        }
+        .door.opened .hatch {
+            transform: rotateY(180deg);
+        }
+        .hatch-content {
+            background-color: #fff; /* White background */
+            border: 2px solid #e24d4d; /* Slightly lighter red border */
+            padding: 10px;
+            box-sizing: border-box;
+            display: none;
+            transform: rotateY(180deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            border-radius: 5px;
+            color: #333; /* Dark text */
+        }
+        .door.opened .hatch-content {
+            display: block;
+        }
+        .calendar .door:nth-child(23) {
+            margin-bottom: 5px; /* Adjust the gap for the 23rd door */
+        }
+    </style>
+</head>
+<body>
+    <h1>Advent Calendar</h1>
+    <div class="calendar" id="calendar"></div>
+
+    <script>
+        // Number of days in the calendar
+        const numberOfDays = 24;
+
+        // Function to create the calendar doors
+        function createCalendar() {
+            const calendarElement = document.getElementById('calendar');
+            const currentDate = new Date();
+            const currentDay = currentDate.getDate();
+
+            for (let day = 1; day <= numberOfDays; day++) {
+                const door = document.createElement('div');
+                door.classList.add('door');
+                
+                const hatch = document.createElement('div');
+                hatch.classList.add('hatch');
+                hatch.textContent = day;
+
+                const hatchContent = document.createElement('div');
+                hatchContent.classList.add('hatch-content');
+
+                // Change the content for each day
+                let content = '';
+                switch (day) {
+                    case 1:
+                        content = '🎅 Ho Ho Ho! It\'s Day 1!';
+                        break;
+                    case 2:
+                        content = 'Well, well, well. Day 2!';
+                        break;
+                    case 3:
+                        content = 'Day 3, congrats! Take a potato!';
+                        break;
+                    case 4:
+                        content = 'Day 4 today, I am proud of you!';
+                        break;
+                    case 5:
+                        content = 'Time to decorate!🎄';
+                        break;
+                    case 6:
+                        content = 'It is snowing ❄️';
+                        break;
+                    case 7:
+                        content = 'It is cold outside!';
+                        break;
+                    case 8:
+                        content = 'Go play Kahoot!';
+                        break;
+                    case 9:
+                        content = '';
+                        break;
+                    case 10:
+                        content = '';
+                        break;
+                    case 11:
+                        content = '';
+                        break;
+                    case 12:
+                        content = '';
+                        break;
+                    case 13:
+                        content = '';
+                        break;
+                    case 14:
+                        content = '';
+                        break;
+                    case 15:
+                        content = '';
+                        break;
+                    case 16:
+                        content = '';
+                        break;
+                    case 17:
+                        content = '';
+                        break;
+                    case 18:
+                        content = '';
+                        break;
+                    case 19:
+                        content = '';
+                        break;
+                    case 20:
+                        content = 'Christmas is near!';
+                        break;
+                    case 21:
+                        content = '';
+                        break;
+                    case 22:
+                        content = '';
+                        break;
+                    case 23:
+                        content = '';
+                        break;
+                    case 24:
+                        content = '';
+                        break;
+                    // Add more cases for other days
+
+                    default:
+                        content = `🎁 Day ${day}: Surprise awaits!`;
+                }
+
+                hatchContent.innerHTML = content;
+
+                hatch.appendChild(hatchContent);
+                door.appendChild(hatch);
+
+                if (day <= currentDay) {
+                    door.addEventListener('click', () => openDoor(door));
+                    door.style.pointerEvents = 'auto'; // Enable click events for past days
+                }
+
+                calendarElement.appendChild(door);
+            }
+        }
+
+        // Function to open a door
+        function openDoor(doorElement) {
+            doorElement.classList.add('opened');
+            doorElement.style.pointerEvents = 'none'; // Disable click events after opening
+        }
+
+        // Call the function to create the calendar
+        createCalendar();
+    </script>
+</body>
+</html>
